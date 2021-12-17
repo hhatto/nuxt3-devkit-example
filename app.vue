@@ -23,21 +23,19 @@ export default {
     };
   },
   async mounted() {
-    // use main net
-    const registryContractAddress = addresses.eth.main.registry;
+    // use arbitrum one
+    const registry = addresses.arbitrum.one;
     const provider = new ethers.providers.JsonRpcProvider(
       this.config.WEB3_PROVIDER_URL
     );
     const network = await provider.ready;
-    console.log(network);
     const contract = contractFactory(provider);
-    const lockupContractAddress = await contract
-      .registry(registryContractAddress)
-      .lockup();
+    const lockupContract = contract.lockup(registry.lockup);
+    console.log(network, registry, lockupContract);
 
-    const propertyStakingAmount = await contract
-      .lockup(lockupContractAddress)
-      .getPropertyValue(this.propertyAddress);
+    const propertyStakingAmount = await lockupContract.totalLockedForProperty(
+      this.propertyAddress
+    );
     const stakingAmount = ethers.BigNumber.from(propertyStakingAmount).div(
       ethers.BigNumber.from(10).pow(18)
     );
@@ -47,9 +45,9 @@ export default {
       }'s staking amount is ${stakingAmount.toBigInt()} DEV`
     );
 
-    const propertyRewards = await contract
-      .lockup(lockupContractAddress)
-      .calculateRewardAmount(this.propertyAddress);
+    const propertyRewards = await lockupContract.calculateRewardAmount(
+      this.propertyAddress
+    );
     const reward = ethers.BigNumber.from(propertyRewards[0]).div(
       ethers.BigNumber.from(10).pow(36)
     );
