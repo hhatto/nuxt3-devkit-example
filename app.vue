@@ -17,7 +17,7 @@ export default {
     console.log(config, config.WEB3_PROVIDER_URL);
     return {
       config,
-      propertyAddress: "0xac1AC9d00314aE7B4a7d6DbEE4860bECedF92309",
+      propertyAddress: "0xA3F2C13c7392924C334E72C0Bab69a5f0131A786", // for L2
       staking: undefined,
       reward: undefined,
     };
