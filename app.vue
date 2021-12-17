@@ -8,7 +8,8 @@
 
 <script>
 import { ethers } from "ethers";
-import { contractFactory, addresses } from "@devprotocol/dev-kit";
+import { addresses } from "@devprotocol/dev-kit";
+import { contractFactory } from "@devprotocol/dev-kit/l2";
 
 export default {
   data() {
